@@ -1,6 +1,57 @@
 # WinMTR_dll
 Base on codepools/WinMTR v0.92, change to dll.
 
+Debug environment:
+    Win10 10.0.14393
+    Visual Studio 2013 Pro
+
+How to use the dll?
+    WinMTRNet* wmtrnet = new WinMTRNet();
+	wmtrnet->DoTrace("157.122.98.14");		// It blocks, done by a work thread.
+	// wmtrnet->StopTrace();				// Stop it by main thread.
+	FormatResult();
+	delete wmtrnet;
+
+==============================Code Fragment=======================
+CString FormatResult()
+{
+	USES_CONVERSION;
+
+	char buf[255] = { 0 };
+	TCHAR tBuff[255] = { 0 };
+	TCHAR t_buf[1000] = { 0 };
+	char f_buf[255 * 100] = { 0 };
+
+	int nh = wmtrnet->GetMax();
+
+	CString str;
+	str.AppendFormat(_T("%s\r\n"), m_targetIP);
+	str.AppendFormat(_T("|------------------------------------------------------------------------------------------|\r\n"));
+	str.AppendFormat(_T("|                                             statistics                                   |\r\n"));
+	str.AppendFormat(_T("|                       Host              -   %%  | Sent | Recv | Best | Avrg | Wrst | Last |\r\n"));
+	str.AppendFormat(_T("|------------------------------------------------|------|------|------|------|------|------|\r\n"));
+
+	for (int i = 0; i < nh; i++) {
+		wmtrnet->GetName(i, buf);
+		if (strcmp(buf, "") == 0)
+		{
+			strcpy(buf, "No response from host");
+		}
+
+		wsprintf(t_buf, _T("|%40s - %4d | %4d | %4d | %4d | %4d | %4d | %4d |\r\n"),
+			A2T(buf), wmtrnet->GetPercent(i),
+			wmtrnet->GetXmit(i), wmtrnet->GetReturned(i), wmtrnet->GetBest(i),
+			wmtrnet->GetAvg(i), wmtrnet->GetWorst(i), wmtrnet->GetLast(i));
+
+		str.Append(t_buf);
+	}
+
+	str.AppendFormat(_T("|________________________________________________|______|______|______|______|______|______|\r\n"));
+	str.AppendFormat(_T("\r\n"));
+	retrun str;
+}
+
+=============================================History=============================================
 codepools/WinMTR v0.92
 
 
