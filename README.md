@@ -2,18 +2,21 @@
 Base on codepools/WinMTR v0.92, change to dll.
 
 Debug environment:
-    Win10 10.0.14393
-    Visual Studio 2013 Pro
+	
+	Win10 10.0.14393
+	Visual Studio 2013 Pro
 
 How to use the dll?
-    WinMTRNet* wmtrnet = new WinMTRNet();
-    wmtrnet->DoTrace("157.122.98.14");		// It blocks, done by a work thread.
-    // wmtrnet->StopTrace();				// Stop it by main thread.
-    FormatResult();
-    delete wmtrnet;
+
+	WinMTRNet* wmtrnet = new WinMTRNet();
+	 wmtrnet->DoTrace("157.122.98.14");   // It blocks, done by a work thread.
+	// wmtrnet->StopTrace();	      // Stop it by main thread.
+	FormatResult();
+	delete wmtrnet;
 
 ==============================Code Fragment=======================
-CString FormatResult()
+
+*** CString FormatResult() ***
 {
 	USES_CONVERSION;
 
