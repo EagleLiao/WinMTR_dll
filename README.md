@@ -10,7 +10,7 @@ How to use the dll?
 
 	WinMTRNet* wmtrnet = new WinMTRNet();
 	 wmtrnet->DoTrace("157.122.98.14");   // It blocks, done by a work thread.
-	// wmtrnet->StopTrace();	      // Stop it by main thread.
+	// wmtrnet->StopTrace();	      // Stop it by main thread after a while.
 	FormatResult();
 	delete wmtrnet;
 
